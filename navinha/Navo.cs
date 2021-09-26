@@ -5,6 +5,7 @@ using UnityEngine;
 
 using CAMOWA.FileImporting;
 using CAMOWA;
+using System.Collections;
 //Para a ALPHA_VERSION referênciar: Assembly-CSharp da alpha e UnityEngine
 //Para CURRENT_VERSION  referênciar: Assembly-CSharp do current, UnityEngine, UnityEngine.AudioModule, UnityEngine.CoreModule, UnityEngine.PhysicsModule, UnityEngine.TextRenderingModule
 
@@ -41,18 +42,16 @@ namespace Navinha
         {
             SceneLoading.OnSceneLoad += SceneLoading_OnSceneLoad;
         }
-
-        bool OnSolarSystemScene = false;
+        
         private void SceneLoading_OnSceneLoad(int sceneId)
         {
-            OnSolarSystemScene = sceneId == 1;
             if (sceneId == 1)
                 AddNave();
         }
 
         public void Update()
         {
-            if (OnSolarSystemScene)
+            if (Application.loadedLevel == 1)
             {
                 if (nave == null)
                 {
