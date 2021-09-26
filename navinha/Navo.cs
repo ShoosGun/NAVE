@@ -1,12 +1,19 @@
 ﻿using System.IO;
 using System.Reflection;
-using CAMOWA;
+using BepInEx;
 using UnityEngine;
-using Navinha.FileImportingHelpers;
+
+using CAMOWA.FileImporting;
+using CAMOWA;
+//Para a ALPHA_VERSION referênciar: Assembly-CSharp da alpha e UnityEngine
+//Para CURRENT_VERSION  referênciar: Assembly-CSharp do current, UnityEngine, UnityEngine.AudioModule, UnityEngine.CoreModule, UnityEngine.PhysicsModule, UnityEngine.TextRenderingModule
 
 namespace Navinha
 {
-    public class Navo : MonoBehaviour
+    [BepInDependency("locochoco.plugins.CAMOWA",BepInDependency.DependencyFlags.HardDependency)]
+    [BepInPlugin("locochoco.plugin.nave","Navinha","1.0.0.0")]
+    [BepInProcess("OuterWilds_Alpha_1_2.exe")]
+    public class Navo : BaseUnityPlugin
     {
         private const string naveMeshFile = "navinhoca.obj";
         private const string naveTextureFile = "textura.jpg";
@@ -29,50 +36,65 @@ namespace Navinha
 
             private set { }
         }
-        [IMOWAModInnit("Nave", 1, 2)]
-        public static void ModInnit(string startingPoint)
+
+        public void Awake()
+        {
+            SceneLoading.OnSceneLoad += SceneLoading_OnSceneLoad;
+        }
+
+        bool OnSolarSystemScene = false;
+        private void SceneLoading_OnSceneLoad(int sceneId)
+        {
+            OnSolarSystemScene = sceneId == 1;
+            if (sceneId == 1)
+                AddNave();
+        }
+
+        public void Update()
+        {
+            if (OnSolarSystemScene)
+            {
+                if (nave == null)
+                {
+                    nave = CreateNave();
+                    nave.SetActive(false);
+                }
+                if (Input.GetKeyUp(KeyCode.C))
+                {
+                    if (!nave.activeSelf)
+                        nave.SetActive(true);
+                    nave.transform.parent = Locator.GetSunTransform().root;
+                    nave.transform.position = Camera.main.transform.forward * 3f + Camera.main.transform.position;
+                    nave.transform.rotation = Locator.GetPlayerTransform().rotation;
+                    nave.GetAttachedOWRigidbody().SetVelocity(Locator.GetPlayerTransform().GetAttachedOWRigidbody().GetVelocity());
+                }
+            }
+        }
+        public static void AddNave()
         {
             if (naveMesh == null)
             {
-                ObjImporter importer = new ObjImporter();
-                naveMesh = importer.ImportFile(Path.Combine(DllExecutablePath, naveMeshFile));
+                naveMesh = FileImporter.ImportOBJMesh(Path.Combine(DllExecutablePath, naveMeshFile));
             }
             if (naveMaterial == null)
             {
                 var shade = Shader.Find("Diffuse");
                 naveMaterial = new Material(shade)
                 {
-                    mainTexture = FileImporting.ImportImage(Path.Combine(DllExecutablePath, naveTextureFile))
+                    mainTexture = FileImporter.ImportImage(Path.Combine(DllExecutablePath, naveTextureFile))
                 };
             }
             if (naveThrusterAudio == null)
             {
                 try
                 {
-                    naveThrusterAudio = FileImporting.ImportWAVAudio(Path.Combine(DllExecutablePath, naveThrusterAudioFile));
+                    naveThrusterAudio = FileImporter.ImportWAVAudio(Path.Combine(DllExecutablePath, naveThrusterAudioFile));
                 }
                 catch { Debug.Log("Erro ao ler o audio"); }
             }
-            Locator.GetPlayerTransform().gameObject.AddComponent<Navo>();
             NaveInputs.InnitNaveInputs();
         }
-        public void Update()
-        {
-            if (nave == null)
-            {
-                nave = CreateNave();
-                nave.SetActive(false);
-            }
-            if (Input.GetKeyUp(KeyCode.C))
-            {
-                if(!nave.activeSelf)
-                    nave.SetActive(true);
-                nave.transform.parent = Locator.GetSunTransform().root;
-                nave.transform.position = Camera.main.transform.forward * 3f + Camera.main.transform.position;
-                nave.transform.rotation = Locator.GetPlayerTransform().rotation;
-                nave.GetAttachedOWRigidbody().SetVelocity(Locator.GetPlayerTransform().GetAttachedOWRigidbody().GetVelocity());
-            }
-        }
+        
         private GameObject CreateNave()
         {
             //Parte dos propulsores 
@@ -83,11 +105,13 @@ namespace Navinha
             NaveThrusterController naveThrusterController = naveBody.AddComponent<NaveThrusterController>();
 
             naveBody.AddComponent<NaveNoiseMaker>();
-						
+
+            #if ALPHA_VERSION
             LODLayer lodLayer =  naveBody.AddComponent<LODLayer>();
             HarmonyLib.AccessTools.FieldRefAccess<LODLayer, bool>(lodLayer, "_ignoreLOD") = true;
             HarmonyLib.AccessTools.FieldRefAccess<LODLayer, int>(lodLayer, "_lodLayer") = 0;
-
+            #elif CURRENT_VERSION
+            #endif
             //Assento
             GameObject naveSeat = new GameObject("nave_seat");
             naveSeat.transform.parent = naveBody.transform;
@@ -95,7 +119,13 @@ namespace Navinha
             CapsuleCollider assentoCollider= naveSeat.AddComponent<CapsuleCollider>();
             assentoCollider.radius = 0.5f;
             assentoCollider.height = 2f;
+
+            #if ALPHA_VERSION
             naveSeat.AddComponent<InteractZone>().Init("Sentar");
+
+
+            #elif CURRENT_VERSION
+            #endif
 
             PlayerAttachPoint attachPoint = naveSeat.AddComponent<PlayerAttachPoint>();
             HarmonyLib.AccessTools.FieldRefAccess<PlayerAttachPoint, bool>(attachPoint, "_lockPlayerTurning") = true;
@@ -113,9 +143,15 @@ namespace Navinha
             naveDetector.transform.localPosition = Vector3.zero;
 
             naveDetector.AddComponent<SphereCollider>();
+
+
+            #if ALPHA_VERSION
             naveDetector.AddComponent<AlignmentFieldDetector>();
             naveDetector.AddComponent<SimpleFluidDetector>().SetDragFactor(2f);
-            
+
+            #elif CURRENT_VERSION
+            #endif
+
             //Collider
             GameObject naveCollider = new GameObject("nave_collider");
             naveCollider.transform.parent = naveBody.transform;

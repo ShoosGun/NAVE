@@ -29,10 +29,15 @@ namespace Navinha
         public void SetTranslationalSource(OWAudioSource translationalSource, AudioClip translationClip)
         {
             TranslationalSource = translationalSource;
+            #if ALPHA_VERSION
             TranslationalSource.audio.loop = true;
             TranslationalSource.audio.playOnAwake = false;
             TranslationalSource.audio.clip = translationClip;
-
+            #elif CURRENT_VERSION
+            TranslationalSource.loop = true;
+            TranslationalSource.playOnAwake = false;
+            TranslationalSource.clip = translationClip;
+            #endif
             TranslationalAudioSource = TranslationalSource.GetAudioSource();
             TranslationalAudioSource.volume = 0f;
         }

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Navinha</RootNamespace>
     <AssemblyName>Navinha</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,20 +27,24 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;ALPHA_VERSION</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>..\..\DIMOWA\Instalador\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\OuterWilds Alpha 1_2\BepInEx\core\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp">
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\OuterWilds Alpha 1_2\OuterWilds_Alpha_1_2_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="CAMOWA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\DIMOWA\CAMOWA\bin\OWA\CAMOWA.dll</HintPath>
+    <Reference Include="BepInEx">
+      <HintPath>..\..\..\..\..\OuterWilds Alpha 1_2\BepInEx\core\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="CAMOWA">
+      <HintPath>..\..\CAMOWA\bin\Release\CAMOWA.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -53,16 +58,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileImportingHelpers\FileImporting.cs" />
-    <Compile Include="FileImportingHelpers\WAVImporter.cs" />
     <Compile Include="NaveBody.cs" />
     <Compile Include="NaveFlightConsole.cs" />
     <Compile Include="NaveNoiseMaker.cs" />
-    <Compile Include="NaveThrusterAudio.cs" />
-    <Compile Include="NaveThrusterController.cs" />
-    <Compile Include="NaveThrusterModel.cs" />
+    <Compile Include="Thruster Related\NaveThrusterAudio.cs" />
+    <Compile Include="Thruster Related\NaveThrusterController.cs" />
+    <Compile Include="Thruster Related\NaveThrusterModel.cs" />
     <Compile Include="Navo.cs" />
-    <Compile Include="AccessHelpers\OWInputHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
