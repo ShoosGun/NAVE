@@ -9,6 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Navinha</RootNamespace>
     <AssemblyName>Navinha</AssemblyName>
+    <ModName>Locochoco.Navinha</ModName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -82,4 +83,18 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>echo ‎
+echo         Transferring files to $(ProjectDir)$(ModName)‎
+md "$(ProjectDir)$(ModName)\"
+copy /y "$(ProjectDir)naveThrusterAudio.wav" "$(ProjectDir)$(ModName)\"
+copy /y "$(ProjectDir)navinhoca.obj" "$(ProjectDir)$(ModName)\"
+copy /y "$(ProjectDir)textura.jpg" "$(ProjectDir)$(ModName)\"
+copy /y "$(ProjectDir)manifest.json" "$(ProjectDir)$(ModName)\"
+copy /y "$(TargetPath)" "$(ProjectDir)$(ModName)\"
+del /q "$(ProjectDir)..\$(ModName).zip"
+powershell Compress-Archive "$(ProjectDir)$(ModName)" "$(ProjectDir)..\$(ModName).zip"
+rmdir /Q /S "$(ProjectDir)$(ModName)\"
+echo ‎‎</PostBuildEvent>
+  </PropertyGroup>
 </Project>
