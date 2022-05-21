@@ -1,0 +1,8 @@
+{
+	"filename": "Navinha.dll",
+	"author": "Locochoco",
+	"name": "Navinha",
+	"uniqueName": "Locochoco.Navinha",
+	"version": "0.2.1",
+	"dependencies": ["Locochoco.CAMOWA"]
+}
