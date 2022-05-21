@@ -2,7 +2,7 @@
 	"filename": "Navinha.dll",
 	"author": "Locochoco",
 	"name": "Navinha",
-	"uniqueName": "Locochoco.Navinha",
+	"uniqueName": "Locochoco.NAVE",
 	"version": "0.2.1",
-	"dependencies": ["Locochoco.CAMOWA"]
+	"dependencies": [ "Locochoco.CAMOWA" ]
 }

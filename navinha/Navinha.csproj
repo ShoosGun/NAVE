@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Navinha</RootNamespace>
     <AssemblyName>Navinha</AssemblyName>
-    <ModName>Locochoco.Navinha</ModName>
+    <ModName>Locochoco.NAVE</ModName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
