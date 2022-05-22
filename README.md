@@ -1,4 +1,4 @@
-# NAVE
+# Ninha
 Adds a small ship into the game Outer Wilds Alpha (1.2)
 
 Press C to spawn it in front the player
