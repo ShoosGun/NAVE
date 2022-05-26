@@ -33,29 +33,66 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\OuterWilds Alpha 1_2\BepInEx\core\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony, Version=2.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HarmonyX.2.10.0\lib\net35\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\OuterWilds Alpha 1_2\OuterWilds_Alpha_1_2_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="BepInEx">
-      <HintPath>..\..\..\..\..\OuterWilds Alpha 1_2\BepInEx\core\BepInEx.dll</HintPath>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-UnityScript, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\Assembly-UnityScript.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-UnityScript-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\Assembly-UnityScript-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx, Version=5.4.19.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BepInEx.BaseLib.5.4.19\lib\net35\BepInEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang, Version=2.0.9.5, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\Boo.Lang.dll</HintPath>
     </Reference>
     <Reference Include="CAMOWA">
-      <HintPath>..\..\CAMOWA\bin\Release\CAMOWA.dll</HintPath>
+      <HintPath>..\..\mods\BepInEx\plugins\CAMOWA-v1_0\CAMOWA\CAMOWA.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <HintPath>..\..\..\..\..\OuterWilds Alpha 1_2\OuterWilds_Alpha_1_2_Data\Managed\System.Core.dll</HintPath>
+    <Reference Include="DecalSystem.Runtime, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\DecalSystem.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=2.0.5.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour, Version=22.3.23.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoMod.RuntimeDetour.22.3.23.4\lib\net35\MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils, Version=22.3.23.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoMod.Utils.22.3.23.4\lib\net35\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="System, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL">
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\System.dll</HintPath>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml, Version=2.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e, processorArchitecture=MSIL">
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\System.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\OuterWilds Alpha 1_2\OuterWilds_Alpha_1_2_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityScript.Lang, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OuterWildsAlphaGameLibs.1.2.0\lib\UnityScript.Lang.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +106,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="manifest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -81,6 +119,7 @@
     <Content Include="textura.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

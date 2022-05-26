@@ -5,10 +5,6 @@ using UnityEngine;
 
 using CAMOWA.FileImporting;
 using CAMOWA;
-using System.Collections;
-//Para a ALPHA_VERSION referênciar: Assembly-CSharp da alpha e UnityEngine
-//Para CURRENT_VERSION  referênciar: Assembly-CSharp do current, UnityEngine, UnityEngine.AudioModule, UnityEngine.CoreModule, UnityEngine.PhysicsModule, UnityEngine.TextRenderingModule
-
 namespace Navinha
 {
     [BepInDependency("locochoco.plugins.CAMOWA",BepInDependency.DependencyFlags.HardDependency)]
@@ -105,12 +101,9 @@ namespace Navinha
 
             naveBody.AddComponent<NaveNoiseMaker>();
 
-            #if ALPHA_VERSION
             LODLayer lodLayer =  naveBody.AddComponent<LODLayer>();
             HarmonyLib.AccessTools.FieldRefAccess<LODLayer, bool>(lodLayer, "_ignoreLOD") = true;
             HarmonyLib.AccessTools.FieldRefAccess<LODLayer, int>(lodLayer, "_lodLayer") = 0;
-            #elif CURRENT_VERSION
-            #endif
             //Assento
             GameObject naveSeat = new GameObject("nave_seat");
             naveSeat.transform.parent = naveBody.transform;
@@ -119,12 +112,7 @@ namespace Navinha
             assentoCollider.radius = 0.5f;
             assentoCollider.height = 2f;
 
-            #if ALPHA_VERSION
             naveSeat.AddComponent<InteractZone>().Init("Sentar");
-
-
-            #elif CURRENT_VERSION
-            #endif
 
             PlayerAttachPoint attachPoint = naveSeat.AddComponent<PlayerAttachPoint>();
             HarmonyLib.AccessTools.FieldRefAccess<PlayerAttachPoint, bool>(attachPoint, "_lockPlayerTurning") = true;
@@ -144,12 +132,8 @@ namespace Navinha
             naveDetector.AddComponent<SphereCollider>();
 
 
-            #if ALPHA_VERSION
             naveDetector.AddComponent<AlignmentFieldDetector>();
             naveDetector.AddComponent<SimpleFluidDetector>().SetDragFactor(2f);
-
-            #elif CURRENT_VERSION
-            #endif
 
             //Collider
             GameObject naveCollider = new GameObject("nave_collider");

@@ -14,7 +14,7 @@ namespace Navinha
 
         private float thrustVolume = 10f;
 
-        protected override void Awake()
+        public override void Awake()
         {
             base.Awake();
             naveThrusterModel = _attachedBody.GetRequiredComponent<NaveThrusterModel>();

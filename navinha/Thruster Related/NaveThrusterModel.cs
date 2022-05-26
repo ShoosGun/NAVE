@@ -4,14 +4,14 @@ namespace Navinha
 {
     public class NaveThrusterModel : ThrusterModel
     {
-        protected override void Awake()
+        public override void Awake()
         {
             base.Awake();
             _maxTranslationalThrust = 50f;
 			_maxRotationalThrust = 20f; //5f eh o padrao
         }
-        
-        protected override void FireTranslationalThrusters()
+
+        public override void FireTranslationalThrusters()
         {
             //Só há um foguete, que aponta para frente. Então iremos usar o z do _translationalInput para saber quanto será o impulso
             float aceleracao = Mathf.Clamp(_translationalInput.z * _maxTranslationalThrust, 0f, _maxTranslationalThrust);

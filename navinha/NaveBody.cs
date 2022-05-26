@@ -7,7 +7,7 @@ namespace Navinha
         private OWRigidbody _playerBody;
         private bool _isPlayerAtFlightConsole;
 
-        protected override void Awake()
+        public override void Awake()
         {
             base.Awake();
             GlobalMessenger<OWRigidbody>.AddListener("EnterNaveFlightConsole", OnEnterFlightConsole);
@@ -15,7 +15,7 @@ namespace Navinha
             _playerBody = gameObject.GetTaggedComponent<OWRigidbody>("Player");
         }
 
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.OnDestroy();
             GlobalMessenger<OWRigidbody>.RemoveListener("EnteNaverFlightConsole", OnEnterFlightConsole);

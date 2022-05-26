@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-
 using CAMOWA.AccessHelpers;
 
 namespace Navinha
@@ -78,7 +77,7 @@ namespace Navinha
 
         private OWRigidbody _shipBody;
         
-        protected override void Awake()
+        public override void Awake()
         {
             _shipBody = this.GetRequiredComponent<OWRigidbody>();
             base.Awake();
@@ -86,7 +85,7 @@ namespace Navinha
             GlobalMessenger<OWRigidbody>.AddListener("EnterNaveFlightConsole", OnEnterNaveFlightConsole);
             GlobalMessenger.AddListener("ExitNaveFlightConsole", OnExitNaveFlightConsole);
         }
-        protected override void OnDestroy()
+        public override void OnDestroy()
         {
             base.OnDestroy();
             GlobalMessenger<OWRigidbody>.RemoveListener("EnterNaveFlightConsole", OnEnterNaveFlightConsole);
@@ -110,7 +109,7 @@ namespace Navinha
         {
             return NaveInputs.AtivarPropulsor.GetInput() > 0.1f;
         }
-        protected override Vector3 ReadTranslationalInput()
+        public override Vector3 ReadTranslationalInput()
         {
             if (IsThrusterOn())
                 return new Vector3(0f, 0f, Potencia / 1000f);
@@ -118,7 +117,7 @@ namespace Navinha
             return Vector3.zero;
         }
 
-        protected override Vector3 ReadRotationalInput()
+        public override Vector3 ReadRotationalInput()
         {
             //Rodar na horizontal eh 8x menos efetivo que rolar (1.25f de aceleracao)
             if (ehParaRolar)
