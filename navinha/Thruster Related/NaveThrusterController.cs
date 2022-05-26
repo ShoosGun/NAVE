@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using CAMOWA.AccessHelpers;
 
 namespace Navinha
 {
@@ -49,15 +48,20 @@ namespace Navinha
             GlobalMessenger<OWRigidbody>.AddListener("EnterNaveFlightConsole", OnEnterNaveFlightConsole);
             GlobalMessenger.AddListener("ExitNaveFlightConsole", OnExitNaveFlightConsole);
         }
-
         private static void OnEnterNaveFlightConsole(OWRigidbody nave)
         {
-            OWInputHelper.ActiveInputs() = new HashSet<InputCommand>(naveInputs);
+            unsafe
+            {
+                OWInput._activeInputs = new HashSet<InputCommand>(naveInputs);
+            }
         }
         private static void OnExitNaveFlightConsole()
         {
-            OWInputHelper.ActiveInputs() = new HashSet<InputCommand>(OWInputHelper.characterInputs);
-        }
+            unsafe
+            {
+                OWInput._activeInputs = new HashSet<InputCommand>(OWInput._characterInputs);
+            }
+        } 
     }
     public class NaveThrusterController : ThrusterController
     {
