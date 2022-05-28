@@ -23,14 +23,19 @@ namespace Navinha
         public ScreenPrompt valorDaPotencia;
         public NaveThrusterController naveThrusterController;
 
+        private string TurnOnPrompt = "Turn On";
+        private string LowerPowerPrompt = "Lower Power";
+        private string IncreasePowerPrompt = "Increase Power";
+        private string PowerPrompt = "Power: ";
+
 
         private void Awake()
         {
             enabled = false;
-            promptDeAtivar = new ScreenPrompt(XboxButton.LeftStick, "Ligar", 1);
-            promptDeReduzirPotencia = new ScreenPrompt(XboxButton.LeftTrigger, "Diminuir Potencia", 1);
-            promptDeAumentarPotencia = new ScreenPrompt(XboxButton.RightTrigger, "Aumentar Potencia", 1);
-            valorDaPotencia = new ScreenPrompt("Potencia 0%", 1);
+            promptDeAtivar = new ScreenPrompt(XboxButton.LeftStick, TurnOnPrompt, 1);
+            promptDeReduzirPotencia = new ScreenPrompt(XboxButton.LeftTrigger, LowerPowerPrompt, 1);
+            promptDeAumentarPotencia = new ScreenPrompt(XboxButton.RightTrigger, IncreasePowerPrompt, 1);
+            valorDaPotencia = new ScreenPrompt(PowerPrompt, 1);
 
             attachPoint = this.GetRequiredComponent<PlayerAttachPoint>();
             interactVolume = this.GetRequiredComponent<InteractVolume>();
@@ -74,7 +79,7 @@ namespace Navinha
                 Locator.GetPromptManager().RemoveScreenPrompt(valorDaPotencia);
             }
             if (naveThrusterController != null)
-                valorDaPotencia.SetText("Potencia: " + naveThrusterController.Potencia / 10 + '%');
+                valorDaPotencia.SetText(PowerPrompt + naveThrusterController.Potencia / 10 + '%');
         }
     }
 }

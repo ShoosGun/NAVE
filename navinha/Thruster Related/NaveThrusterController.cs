@@ -85,7 +85,7 @@ namespace Navinha
         {
             _shipBody = this.GetRequiredComponent<OWRigidbody>();
             base.Awake();
-            base.enabled = false;
+            enabled = false;
             GlobalMessenger<OWRigidbody>.AddListener("EnterNaveFlightConsole", OnEnterNaveFlightConsole);
             GlobalMessenger.AddListener("ExitNaveFlightConsole", OnExitNaveFlightConsole);
         }
@@ -132,14 +132,12 @@ namespace Navinha
 
         private void OnEnterNaveFlightConsole(OWRigidbody NaveBody)
         {
-            Debug.Log("Ligou a nave");
-            base.enabled = true;
+            enabled = true;
         }
 
         private void OnExitNaveFlightConsole()
         {
-            Debug.Log("Desligou a nave");
-            base.enabled = false;
+            enabled = false;
         }
     }
 }

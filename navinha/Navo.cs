@@ -8,7 +8,7 @@ using CAMOWA;
 namespace Navinha
 {
     [BepInDependency("locochoco.plugins.CAMOWA",BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("locochoco.plugin.nave","Navinha","1.0.0.0")]
+    [BepInPlugin("locochoco.plugin.nave","Navinha", "0.2.2")]
     [BepInProcess("OuterWilds_Alpha_1_2.exe")]
     public class Navo : BaseUnityPlugin
     {
@@ -22,6 +22,8 @@ namespace Navinha
         private GameObject nave;
 
         private static string gamePath;
+
+        private string seatOnPrompt = "Seat On";
         public static string DllExecutablePath
         {
             get
@@ -112,7 +114,7 @@ namespace Navinha
             assentoCollider.radius = 0.5f;
             assentoCollider.height = 2f;
 
-            naveSeat.AddComponent<InteractZone>().Init("Sentar");
+            naveSeat.AddComponent<InteractZone>().Init(seatOnPrompt);
 
             PlayerAttachPoint attachPoint = naveSeat.AddComponent<PlayerAttachPoint>();
             HarmonyLib.AccessTools.FieldRefAccess<PlayerAttachPoint, bool>(attachPoint, "_lockPlayerTurning") = true;

@@ -1,8 +1,8 @@
 {
-	"filename" : "Navinha.dll",
+	"filename": "Navinha.dll",
 	"author": "Locochoco",
 	"name": "Navinha",
 	"uniqueName": "Locochoco.NAVE",
-	"description": "Adds a new ship into the game",	
-	"version": "0.1",
+	"version": "0.2.2",
+	"dependencies": [ "Locochoco.CAMOWA" ]
 }
