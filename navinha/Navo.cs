@@ -8,7 +8,7 @@ using CAMOWA;
 namespace Navinha
 {
     [BepInDependency("locochoco.plugins.CAMOWA",BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("locochoco.plugin.nave","Navinha", "0.2.2")]
+    [BepInPlugin("locochoco.plugin.nave","Navinha", "0.2.3")]
     [BepInProcess("OuterWilds_Alpha_1_2.exe")]
     public class Navo : BaseUnityPlugin
     {
@@ -95,7 +95,10 @@ namespace Navinha
         private GameObject CreateNave()
         {
             //Parte dos propulsores 
-            GameObject naveBody = new GameObject("nave_body");
+            GameObject naveBody = new GameObject("nave_body")
+            {
+                tag = "Ship"
+            };
             naveBody.AddComponent<Rigidbody>().mass = 0.6f;
             OWRigidbody naveBodyRigid = naveBody.AddComponent<NaveBody>();
             naveBody.AddComponent<NaveThrusterModel>();
