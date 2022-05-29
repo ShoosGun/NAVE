@@ -2,7 +2,7 @@
 
 namespace Navinha
 {
-    class NaveFlightConsole : MonoBehaviour
+    class NaveFlightConsole : ControlledVanishObject
     {
         public OWRigidbody naveBody;
 
@@ -27,8 +27,10 @@ namespace Navinha
         private string LowerPowerPrompt = "Lower Power";
         private string IncreasePowerPrompt = "Increase Power";
         private string PowerPrompt = "Power: ";
-
-
+        public override void  OnVanish() 
+        {
+            GlobalMessenger<DeathType>.FireEvent("TriggerPlayerDeath", DeathType.Energy);
+        }
         private void Awake()
         {
             enabled = false;

@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 using BepInEx;
+using HarmonyLib;
 using UnityEngine;
 
 using CAMOWA.FileImporting;
@@ -24,6 +25,7 @@ namespace Navinha
         private static string gamePath;
 
         private string seatOnPrompt = "Seat On";
+        bool isOnCorrectScene = false;
         public static string DllExecutablePath
         {
             get
@@ -39,35 +41,35 @@ namespace Navinha
         public void Awake()
         {
             SceneLoading.OnSceneLoad += SceneLoading_OnSceneLoad;
+            Harmony harmonyInstance =  new Harmony("com.locochoco.plugin.navinha");
+            harmonyInstance.PatchAll();
         }
         
         private void SceneLoading_OnSceneLoad(int sceneId)
         {
+            isOnCorrectScene = false;
             if (sceneId == 1)
-                AddNave();
+            {
+                GetNaveAssets();
+                nave = CreateNave();
+                nave.SetActive(false);
+                isOnCorrectScene = true;
+            }
         }
 
         public void Update()
         {
-            if (Application.loadedLevel == 1)
+            if (Input.GetKeyUp(KeyCode.C) && nave != null && isOnCorrectScene)
             {
-                if (nave == null)
-                {
-                    nave = CreateNave();
-                    nave.SetActive(false);
-                }
-                if (Input.GetKeyUp(KeyCode.C))
-                {
-                    if (!nave.activeSelf)
-                        nave.SetActive(true);
-                    nave.transform.parent = Locator.GetSunTransform().root;
-                    nave.transform.position = Camera.main.transform.forward * 3f + Camera.main.transform.position;
-                    nave.transform.rotation = Locator.GetPlayerTransform().rotation;
-                    nave.GetAttachedOWRigidbody().SetVelocity(Locator.GetPlayerTransform().GetAttachedOWRigidbody().GetVelocity());
-                }
+                if (!nave.activeSelf)
+                    nave.SetActive(true);
+                nave.transform.parent = Locator.GetSunTransform().root;
+                nave.transform.position = Camera.main.transform.forward * 3f + Camera.main.transform.position;
+                nave.transform.rotation = Locator.GetPlayerTransform().rotation;
+                nave.GetAttachedOWRigidbody().SetVelocity(Locator.GetPlayerTransform().GetAttachedOWRigidbody().GetVelocity());
             }
         }
-        public static void AddNave()
+        public static void GetNaveAssets()
         {
             if (naveMesh == null)
             {
@@ -94,11 +96,7 @@ namespace Navinha
         
         private GameObject CreateNave()
         {
-            //Parte dos propulsores 
-            GameObject naveBody = new GameObject("nave_body")
-            {
-                tag = "Ship"
-            };
+            GameObject naveBody = new GameObject("nave_body");
             naveBody.AddComponent<Rigidbody>().mass = 0.6f;
             OWRigidbody naveBodyRigid = naveBody.AddComponent<NaveBody>();
             naveBody.AddComponent<NaveThrusterModel>();
@@ -107,8 +105,9 @@ namespace Navinha
             naveBody.AddComponent<NaveNoiseMaker>();
 
             LODLayer lodLayer =  naveBody.AddComponent<LODLayer>();
-            HarmonyLib.AccessTools.FieldRefAccess<LODLayer, bool>(lodLayer, "_ignoreLOD") = true;
-            HarmonyLib.AccessTools.FieldRefAccess<LODLayer, int>(lodLayer, "_lodLayer") = 0;
+            lodLayer._ignoreLOD = true;
+            lodLayer._lodLayer = 0;
+            #region Nave_Seat
             //Assento
             GameObject naveSeat = new GameObject("nave_seat");
             naveSeat.transform.parent = naveBody.transform;
@@ -120,26 +119,33 @@ namespace Navinha
             naveSeat.AddComponent<InteractZone>().Init(seatOnPrompt);
 
             PlayerAttachPoint attachPoint = naveSeat.AddComponent<PlayerAttachPoint>();
-            HarmonyLib.AccessTools.FieldRefAccess<PlayerAttachPoint, bool>(attachPoint, "_lockPlayerTurning") = true;
-            HarmonyLib.AccessTools.FieldRefAccess<PlayerAttachPoint, bool>(attachPoint, "_centerCamera") = true;
+            attachPoint._lockPlayerTurning = true;
+            attachPoint._centerCamera = true;
             NaveFlightConsole naveFlightConsole = naveSeat.AddComponent<NaveFlightConsole>();
             naveFlightConsole.naveBody = naveBodyRigid;
             naveFlightConsole.naveThrusterController = naveThrusterController;
 
-
             naveSeat.transform.localPosition = new Vector3(0f, 1.1f, 0.5f);
-            
+            #endregion
+
+            #region Nave_Volumes
             //Detector
             GameObject naveDetector = new GameObject("nave_detector");
             naveDetector.transform.parent = naveBody.transform;
             naveDetector.transform.localPosition = Vector3.zero;
-
             naveDetector.AddComponent<SphereCollider>();
-
-
             naveDetector.AddComponent<AlignmentFieldDetector>();
             naveDetector.AddComponent<SimpleFluidDetector>().SetDragFactor(2f);
 
+            GameObject naveRFVolume = new GameObject("RFVolume");
+            naveRFVolume.transform.parent = naveBody.transform;
+            naveRFVolume.transform.localPosition = Vector3.zero;
+            naveRFVolume.AddComponent<SphereCollider>();
+            naveRFVolume.AddComponent<ReferenceFrameVolume>();
+
+            #endregion
+
+            #region Nave_Collider
             //Collider
             GameObject naveCollider = new GameObject("nave_collider");
             naveCollider.transform.parent = naveBody.transform;
@@ -161,7 +167,6 @@ namespace Navinha
             thrusterCollider.transform.localPosition = new Vector3(-1.403f, 0.68f, 0f);
             thrusterCollider.transform.localRotation = Quaternion.Euler(0f, 0f, 98.65f);
             thrusterCollider.AddComponent<CapsuleCollider>().height = 1.72f;
-
             //Proxy collider
             GameObject naveProxyCollider = new GameObject("nave_proxyCollider");
             naveProxyCollider.layer = LayerMask.NameToLayer("ProxyPrimitive");
@@ -178,7 +183,10 @@ namespace Navinha
 
             naveProxyCollider.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
             naveCollider.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
-            
+
+            #endregion
+
+            #region Nave_Mesh
             //Mesh
             GameObject naveMeshGO = new GameObject("nave_mesh");
             naveMeshGO.transform.parent = naveBody.transform;
@@ -189,7 +197,9 @@ namespace Navinha
 
             naveMeshGO.transform.localPosition = new Vector3(0f, 0.5f, 0f);
             naveMeshGO.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+            #endregion
 
+            #region Nave_Audio
             //Audio
             GameObject naveThrusterAudioSource = new GameObject("nave_thrusterAudioSource");
             naveThrusterAudioSource.transform.parent = naveBody.transform;
@@ -199,7 +209,7 @@ namespace Navinha
             OWAudioSource audioSource = naveThrusterAudioSource.AddComponent<OWAudioSource>();
 
             naveBody.AddComponent<NaveThrusterAudio>().SetTranslationalSource(audioSource, naveThrusterAudio);
-            
+            #endregion
 
             return naveBody;
         }

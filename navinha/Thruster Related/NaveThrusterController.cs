@@ -125,9 +125,9 @@ namespace Navinha
         {
             //Rodar na horizontal eh 8x menos efetivo que rolar (1.25f de aceleracao)
             if (ehParaRolar)
-                return new Vector3(- NaveInputs.RodarNaVertical.GetInput() / 8f, 0f, - NaveInputs.RolarOuRodarNaHorizontal.GetInput());
+                return new Vector3(- NaveInputs.RodarNaVertical.GetInput() / 8f * 4f, 0f, - NaveInputs.RolarOuRodarNaHorizontal.GetInput() * 4f);
             else
-                return new Vector3(- NaveInputs.RodarNaVertical.GetInput() / 8f, NaveInputs.RolarOuRodarNaHorizontal.GetInput() / 8f, 0f);
+                return new Vector3(- NaveInputs.RodarNaVertical.GetInput() / 8f * 4f, NaveInputs.RolarOuRodarNaHorizontal.GetInput() / 8f * 4f, 0f);
         }
 
         private void OnEnterNaveFlightConsole(OWRigidbody NaveBody)

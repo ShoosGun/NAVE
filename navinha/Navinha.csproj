@@ -101,11 +101,13 @@
     <Compile Include="NaveBody.cs" />
     <Compile Include="NaveFlightConsole.cs" />
     <Compile Include="NaveNoiseMaker.cs" />
+    <Compile Include="Patches.cs" />
     <Compile Include="Thruster Related\NaveThrusterAudio.cs" />
     <Compile Include="Thruster Related\NaveThrusterController.cs" />
     <Compile Include="Thruster Related\NaveThrusterModel.cs" />
     <Compile Include="Navo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ControlledVanishObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
