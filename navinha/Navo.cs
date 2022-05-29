@@ -41,8 +41,7 @@ namespace Navinha
         public void Awake()
         {
             SceneLoading.OnSceneLoad += SceneLoading_OnSceneLoad;
-            Harmony harmonyInstance =  new Harmony("com.locochoco.plugin.navinha");
-            harmonyInstance.PatchAll();
+            Patches.DoPatches();
         }
         
         private void SceneLoading_OnSceneLoad(int sceneId)
@@ -101,6 +100,7 @@ namespace Navinha
             OWRigidbody naveBodyRigid = naveBody.AddComponent<NaveBody>();
             naveBody.AddComponent<NaveThrusterModel>();
             NaveThrusterController naveThrusterController = naveBody.AddComponent<NaveThrusterController>();
+            naveBody.AddComponent<NaveControlledVanish>();
 
             naveBody.AddComponent<NaveNoiseMaker>();
 

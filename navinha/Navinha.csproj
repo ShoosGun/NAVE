@@ -99,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NaveBody.cs" />
+    <Compile Include="NaveControlledVanish.cs" />
     <Compile Include="NaveFlightConsole.cs" />
     <Compile Include="NaveNoiseMaker.cs" />
     <Compile Include="Patches.cs" />

@@ -65,25 +65,12 @@ namespace Navinha
     }
     public class NaveThrusterController : ThrusterController
     {
-        private Vector3 _lastTranslationalInput = Vector3.zero;
-
         public int Potencia { get; private set; } = 0; //Em "por mil"
 
         private bool ehParaRolar = false;
-
-        private bool mudouEhParaRolar = false;
-
-        //private bool _isIgniting;
-
-        //private float _ignitionTime;
-
-        //private float _ignitionDuration = 1f;
-
-        private OWRigidbody _shipBody;
         
         public override void Awake()
         {
-            _shipBody = this.GetRequiredComponent<OWRigidbody>();
             base.Awake();
             enabled = false;
             GlobalMessenger<OWRigidbody>.AddListener("EnterNaveFlightConsole", OnEnterNaveFlightConsole);
@@ -99,15 +86,7 @@ namespace Navinha
         {
             Potencia += (int)((NaveInputs.AumentarPotencia.GetInput() - NaveInputs.DiminuirPotencia.GetInput()) * 10);
             Potencia = Mathf.Clamp(Potencia, 0,1000);
-
-            if (NaveInputs.TrocarRodarHorizontalPorRolar.GetPressed() && !mudouEhParaRolar)
-            {
-                ehParaRolar = !ehParaRolar;
-                mudouEhParaRolar = true;
-            }
-            else if (mudouEhParaRolar)
-                mudouEhParaRolar = false;
-            
+            ehParaRolar = NaveInputs.TrocarRodarHorizontalPorRolar.GetPressed();            
         }
         public bool IsThrusterOn()
         {
