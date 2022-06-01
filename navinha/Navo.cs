@@ -9,7 +9,7 @@ using CAMOWA;
 namespace Navinha
 {
     [BepInDependency("locochoco.plugins.CAMOWA",BepInDependency.DependencyFlags.HardDependency)]
-    [BepInPlugin("locochoco.plugin.nave","Navinha", "0.2.3")]
+    [BepInPlugin("locochoco.plugin.nave","Navinha", "0.2.4")]
     [BepInProcess("OuterWilds_Alpha_1_2.exe")]
     public class Navo : BaseUnityPlugin
     {
