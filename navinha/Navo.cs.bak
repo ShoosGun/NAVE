@@ -22,8 +22,21 @@ namespace Navinha
 
         private GameObject nave;
 
+        private static string gamePath;
+
         private string seatOnPrompt = "Seat On";
         bool isOnCorrectScene = false;
+        public static string DllExecutablePath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(gamePath))
+                    gamePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                return gamePath;
+            }
+
+            private set { }
+        }
 
         public void Awake()
         {
@@ -33,11 +46,10 @@ namespace Navinha
         
         private void SceneLoading_OnSceneLoad(int sceneId)
         {
-            Patches.CheckControlledVanishObjectVolumeList();
             isOnCorrectScene = false;
             if (sceneId == 1)
             {
-                GetNaveAssets(Path.GetDirectoryName(Info.Location));
+                GetNaveAssets(Info.Location);
                 nave = CreateNave();
                 nave.SetActive(false);
                 isOnCorrectScene = true;
@@ -76,7 +88,7 @@ namespace Navinha
                 {
                     naveThrusterAudio = FileImporter.ImportWAVAudio(Path.Combine(path, naveThrusterAudioFile));
                 }
-                catch { Debug.Log("Error while reading audio"); }
+                catch { Debug.Log("Erro ao ler o audio"); }
             }
             NaveInputs.InnitNaveInputs();
         }

@@ -13,9 +13,7 @@ namespace Navinha
         public void Start() 
         {
             naveBody = gameObject.GetAttachedOWRigidbody();
-            Debug.Log("aaa : " + naveBody == null);
             naveConsole = gameObject.GetComponentInChildren<NaveFlightConsole>();
-            Debug.Log("aaa : " + naveConsole == null);
         }
         public override bool OnDestructionVanish(DestructionVolume destructionVolume)
         {
@@ -28,6 +26,7 @@ namespace Navinha
         }
         public override bool OnBlackHoleVanish(BlackHoleVolume blackHoleVolume)
         {
+            MonoBehaviour.print("black hole receieved naveBody");
             blackHoleVolume._whiteHole.ReceiveWarpedBody(naveBody);
             return false;
         }
@@ -36,8 +35,12 @@ namespace Navinha
         {
             if (Time.time > lastNaveWarpTime + Time.deltaTime)
             {
-                whiteHoleVolume.ForceWarp(naveBody);
-                lastNaveWarpTime = Time.time;
+                unsafe 
+                {
+                    MonoBehaviour.print("white hole receieved naveBody");
+                    whiteHoleVolume.ForceWarp(naveBody);
+                    lastNaveWarpTime = Time.time; 
+                }
             }
             return false;
         }
